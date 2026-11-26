@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pii-vault-mcp"
+version = "0.1.0"
+description = "Pseudonymisation réversible RGPD (Art. 4(5)) 100 % locale pour le français, coffre persistable à chaînage patronymique et serveur MCP"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "mcp>=2.0",
+]
+ner = [
+    "gliner>=0.2",
+]
+dev = [
+    "pytest>=8",
+    "hypothesis>=6.100",
+    "mypy>=1.10",
+    "mcp>=2.0",
+]
+
+[project.scripts]
+pii-vault = "pii_vault.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pii_vault*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra --strict-markers"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
