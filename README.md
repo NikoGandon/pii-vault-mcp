@@ -9,6 +9,8 @@
 
 Librairie Python et **serveur MCP (Model Context Protocol) à frontière fichier** pour pseudonymiser localement des données personnelles (PII) dans des documents français avant tout appel à un LLM cloud, puis réhydrater les rapports localement dans un fichier protégé à partir d'un coffre persistant (`PiiVault`).
 
+> **Origine** : librairie autonome extraite et packagée depuis un dépôt de travail privé d'audit financier (48 commits).
+
 > **Précision juridique RGPD** : un coffre réversible réalise une **pseudonymisation** au sens de l'**Article 4(5) du RGPD**, et non une anonymisation irréversible. Les données restent des données à caractère personnel tant que le coffre existe ; celui-ci reste strictement local (écriture atomique, permissions `0600`) et ne quitte jamais la machine.
 
 ---
