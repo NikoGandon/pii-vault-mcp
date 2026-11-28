@@ -6,8 +6,8 @@ Modèle de menace :
   d'outils (ex. réhydrater `X[IBAN_01]X` puis relire le fichier avec `pseudonymize_file`) :
 
   1. Deux dossiers strictement disjoints sont obligatoires (fail-closed) :
-     - `PII_INPUT_DIR`  : lecture seule pour `pseudonymize_file`
-     - `PII_OUTPUT_DIR` : écriture seule pour `rehydrate_to_file` (jamais lisible par les outils)
+     - `SYMBOLON_INPUT_DIR`  : lecture seule pour `pseudonymize_file`
+     - `SYMBOLON_OUTPUT_DIR` : écriture seule pour `rehydrate_to_file` (jamais lisible par les outils)
   2. `rehydrate_to_file` refuse d'écraser un fichier existant (création atomique O_EXCL en mode 0600).
   3. Les messages d'erreur ne divulguent jamais les chemins absolus de la machine hôte.
   4. `verify_no_leak` est fail-closed : lève FileNotFoundError si le coffre n'existe pas.
@@ -21,21 +21,21 @@ from pathlib import Path
 
 from mcp.server.mcpserver import MCPServer
 
-from pii_vault.scrubber import Scrubber, assert_no_leak, find_leaks, rehydrate
-from pii_vault.vault import PiiVault
+from symbolon.scrubber import Scrubber, assert_no_leak, find_leaks, rehydrate
+from symbolon.vault import PiiVault
 
 _VAULT_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 _TOKEN_RE = re.compile(r"\[(?:PERSONNE|IBAN|NIR|SIREN|SIRET|EMAIL|TEL)_\d{2,}\]")
 
-ENV_VAULT_DIR = "PII_VAULT_DIR"
-ENV_INPUT_DIR = "PII_INPUT_DIR"
-ENV_OUTPUT_DIR = "PII_OUTPUT_DIR"
+ENV_VAULT_DIR = "SYMBOLON_VAULT_DIR"
+ENV_INPUT_DIR = "SYMBOLON_INPUT_DIR"
+ENV_OUTPUT_DIR = "SYMBOLON_OUTPUT_DIR"
 
 mcp = MCPServer(
-    "pii-vault-mcp",
+    "symbolon-pii",
     instructions=(
         "Serveur local de pseudonymisation réversible RGPD (Art. 4(5)) à séparation stricte "
-        "entrée (PII_INPUT_DIR, lecture seule) / sortie (PII_OUTPUT_DIR, écriture seule sans écrasement). "
+        "entrée (SYMBOLON_INPUT_DIR, lecture seule) / sortie (SYMBOLON_OUTPUT_DIR, écriture seule sans écrasement). "
         "Utilisez pseudonymize_file pour lire un document d'entrée en mode pseudonymisé, "
         "verify_no_leak pour vérifier un texte avant partage, et rehydrate_to_file pour écrire "
         "un nouveau fichier réhydraté localement sans réexposer les identités au modèle."
@@ -47,7 +47,7 @@ def _vault_dir() -> Path:
     raw = os.environ.get(ENV_VAULT_DIR)
     if raw:
         return Path(raw).expanduser().resolve()
-    return (Path.home() / ".pii-vault-mcp" / "vaults").resolve()
+    return (Path.home() / ".symbolon-pii" / "vaults").resolve()
 
 
 def _require_dir(env_name: str) -> Path:
@@ -115,7 +115,7 @@ def pseudonymize_file(
     vault_id: str = "default",
     known_persons: list[str] | None = None,
 ) -> dict[str, object]:
-    """Lit un fichier local dans PII_INPUT_DIR, le pseudonymise et persiste le coffre."""
+    """Lit un fichier local dans SYMBOLON_INPUT_DIR, le pseudonymise et persiste le coffre."""
     in_dir, _ = _validated_io_dirs()
     v_path = _vault_path(vault_id)
     src = _resolve_under(in_dir, input_path)
@@ -143,7 +143,7 @@ def rehydrate_to_file(
     output_path: str,
     vault_id: str = "default",
 ) -> dict[str, object]:
-    """Réhydrate localement `text` dans un NOUVEAU fichier de PII_OUTPUT_DIR (0600, sans écrasement)."""
+    """Réhydrate localement `text` dans un NOUVEAU fichier de SYMBOLON_OUTPUT_DIR (0600, sans écrasement)."""
     _, out_dir = _validated_io_dirs()
     v_path = _vault_path(vault_id)
     dst = _resolve_under(out_dir, output_path)

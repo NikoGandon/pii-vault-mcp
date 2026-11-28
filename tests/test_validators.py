@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from hypothesis import given, strategies as st
 
-from pii_vault.validators import (
+from symbolon.validators import (
     is_valid_french_phone,
     is_valid_iban,
     is_valid_luhn,

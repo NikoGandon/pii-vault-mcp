@@ -1,4 +1,4 @@
-"""Interface en ligne de commande pour pii-vault-mcp."""
+"""Interface en ligne de commande pour Symbolon (symbolon-pii)."""
 
 from __future__ import annotations
 
@@ -6,14 +6,14 @@ import argparse
 import sys
 from pathlib import Path
 
-from pii_vault.scrubber import Scrubber, rehydrate
-from pii_vault.vault import PiiVault
+from symbolon.scrubber import Scrubber, rehydrate
+from symbolon.vault import PiiVault
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="pii-vault",
-        description="Pseudonymisation réversible RGPD (Art. 4(5)) 100 % locale pour le français.",
+        prog="symbolon",
+        description="Symbolon — Pseudonymisation réversible RGPD (Art. 4(5)) 100 % locale pour le français.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -31,7 +31,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "mcp":
-        from pii_vault.mcp_server import run_server
+        from symbolon.mcp_server import run_server
 
         run_server()
         return 0

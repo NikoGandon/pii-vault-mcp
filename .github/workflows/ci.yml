@@ -32,7 +32,7 @@ jobs:
         run: pytest -v
 
       - name: Run mypy --strict
-        run: mypy --strict pii_vault
+        run: mypy --strict symbolon
 
       - name: Run synthetic French PII non-regression check (0 USD)
         run: python evals/run_benchmark.py --check

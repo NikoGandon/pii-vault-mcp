@@ -14,7 +14,7 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE))
 
-from pii_vault.validators import (  # noqa: E402
+from symbolon.validators import (  # noqa: E402
     is_valid_iban,
     is_valid_luhn,
     is_valid_nir,

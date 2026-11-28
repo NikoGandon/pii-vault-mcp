@@ -1,16 +1,16 @@
-"""pii-vault-mcp : pseudonymisation réversible RGPD (Art. 4(5)) 100 % locale pour le français."""
+"""Symbolon (symbolon-pii) : pseudonymisation réversible RGPD (Art. 4(5)) 100 % locale pour le français."""
 
 from __future__ import annotations
 
-from pii_vault.detectors import DetectedSpan, NerBackend, detect_deterministic
-from pii_vault.scrubber import (
+from symbolon.detectors import DetectedSpan, NerBackend, detect_deterministic
+from symbolon.scrubber import (
     PiiLeakError,
     ScrubResult,
     Scrubber,
     assert_no_leak,
     rehydrate,
 )
-from pii_vault.vault import EntityKind, PiiVault, VaultSnapshot
+from symbolon.vault import EntityKind, PiiVault, VaultSnapshot
 
 __all__ = [
     "DetectedSpan",

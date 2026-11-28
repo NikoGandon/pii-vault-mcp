@@ -17,7 +17,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from pii_vault.normalization import fold_text, is_safe_word
+from symbolon.normalization import fold_text, is_safe_word
 
 AMBIGUOUS_SURNAME = "__AMBIGUOUS__"
 _TOKEN_INDEX_RE = re.compile(r"^\[([A-Z]+)_(\d+)\]$")

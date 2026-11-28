@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from pii_vault.detectors import DetectedSpan
-from pii_vault.vault import EntityKind
+from symbolon.detectors import DetectedSpan
+from symbolon.vault import EntityKind
 
 DEFAULT_GLINER_MODEL = "urchade/gliner_multi_pii-v1"
 
@@ -34,7 +34,7 @@ class GlinerNerBackend:
             from gliner import GLiNER  # type: ignore[import-not-found]
         except ImportError as exc:
             raise GlinerUnavailableError(
-                "GLiNER n'est pas installé. Installez l'extra optionnel : pip install 'pii-vault-mcp[ner]'."
+                "GLiNER n'est pas installé. Installez l'extra optionnel : pip install -e '.[ner]'."
             ) from exc
         self._threshold = threshold
         self._labels = list(_LABEL_TO_KIND.keys())

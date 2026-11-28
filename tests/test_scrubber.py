@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from pii_vault.scrubber import PiiLeakError, Scrubber, assert_no_leak, rehydrate
-from pii_vault.vault import PiiVault
+from symbolon.scrubber import PiiLeakError, Scrubber, assert_no_leak, rehydrate
+from symbolon.vault import PiiVault
 
 
 def test_chainage_patronymique_independant_de_l_ordre() -> None:

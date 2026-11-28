@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from pii_vault.mcp_server import (
+from symbolon.mcp_server import (
     ENV_INPUT_DIR,
     ENV_OUTPUT_DIR,
     ENV_VAULT_DIR,
@@ -64,7 +64,7 @@ def test_mcp_separation_entree_sortie_multi_appels(
     assert verify_no_leak("XFR76 3000 6000 0112 3456 7890 189X", vault_id="dossier-42")["clean"] is False
     assert verify_no_leak("Compte-rendu sur Pierre Dupont", vault_id="dossier-42")["clean"] is False
 
-    # rehydrate_to_file écrit uniquement dans PII_OUTPUT_DIR (0600) sans renvoyer de PII
+    # rehydrate_to_file écrit uniquement dans SYMBOLON_OUTPUT_DIR (0600) sans renvoyer de PII
     rehyd_meta = rehydrate_to_file(
         "Analyse de [PERSONNE_01] (IBAN [IBAN_01], inconnu [PERSONNE_99]).",
         output_path="rapports/final.txt",
@@ -94,7 +94,7 @@ def test_mcp_bloque_exfiltration_par_enchainement_et_ecrasement(
     rehydrate_to_file("X[IBAN_01]X Z[PERSONNE_01]", output_path="exfil.txt", vault_id="redteam")
     assert (out_dir / "exfil.txt").exists()
 
-    # 2) Tenter de relire ce fichier depuis pseudonymize_file échoue (PII_OUTPUT_DIR non lisible)
+    # 2) Tenter de relire ce fichier depuis pseudonymize_file échoue (SYMBOLON_OUTPUT_DIR non lisible)
     with pytest.raises(FileNotFoundError):
         pseudonymize_file("exfil.txt", vault_id="redteam")
     with pytest.raises(PermissionError) as exc_info:
@@ -106,7 +106,7 @@ def test_mcp_bloque_exfiltration_par_enchainement_et_ecrasement(
     with pytest.raises(FileExistsError, match="écrasement refusé"):
         rehydrate_to_file("vide", output_path="exfil.txt", vault_id="redteam")
 
-    # 4) Le fichier source dans PII_INPUT_DIR n'a pas été touché
+    # 4) Le fichier source dans SYMBOLON_INPUT_DIR n'a pas été touché
     assert "Pierre Dupont" in (in_dir / "source.txt").read_text(encoding="utf-8")
 
 

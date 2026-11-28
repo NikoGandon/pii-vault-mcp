@@ -5,10 +5,10 @@ from __future__ import annotations
 from collections.abc import Sequence
 from pathlib import Path
 
-from pii_vault.cli import main as cli_main
-from pii_vault.detectors import DetectedSpan
-from pii_vault.scrubber import Scrubber, rehydrate
-from pii_vault.vault import EntityKind
+from symbolon.cli import main as cli_main
+from symbolon.detectors import DetectedSpan
+from symbolon.scrubber import Scrubber, rehydrate
+from symbolon.vault import EntityKind
 
 
 class _FakeLocalNer:

@@ -7,15 +7,15 @@ from collections.abc import Iterable, Sequence
 
 from pydantic import BaseModel, ConfigDict
 
-from pii_vault.detectors import (
+from symbolon.detectors import (
     DetectedSpan,
     NerBackend,
     detect_deterministic,
     detect_known_persons,
     resolve_overlaps,
 )
-from pii_vault.normalization import fold_with_map, is_safe_word
-from pii_vault.vault import AMBIGUOUS_SURNAME, EntityKind, PiiVault
+from symbolon.normalization import fold_with_map, is_safe_word
+from symbolon.vault import AMBIGUOUS_SURNAME, EntityKind, PiiVault
 
 _TOKEN_PATTERN = re.compile(r"\[(?:PERSONNE|IBAN|NIR|SIREN|SIRET|EMAIL|TEL)_\d{2,}\]")
 _BORNE_AVANT = r"(?<![a-z])"

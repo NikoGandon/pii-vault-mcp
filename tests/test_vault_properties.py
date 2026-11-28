@@ -7,8 +7,8 @@ from pathlib import Path
 
 from hypothesis import given, settings, strategies as st
 
-from pii_vault.scrubber import rehydrate
-from pii_vault.vault import AMBIGUOUS_SURNAME, EntityKind, PiiVault
+from symbolon.scrubber import rehydrate
+from symbolon.vault import AMBIGUOUS_SURNAME, EntityKind, PiiVault
 
 _FIRST_NAMES = st.sampled_from(["Pierre", "Marie", "Jean", "Claire", "Lucas", "Sophie", "Henri"])
 _LAST_NAMES = st.sampled_from(["Dupont", "Martin", "Bernard", "Moreau", "Laurent", "Garnier"])

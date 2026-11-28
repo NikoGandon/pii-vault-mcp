@@ -8,15 +8,15 @@ from typing import Protocol
 
 from pydantic import BaseModel, ConfigDict
 
-from pii_vault.normalization import fold_text, fold_with_map, is_safe_word, is_trailing_city
-from pii_vault.validators import (
+from symbolon.normalization import fold_text, fold_with_map, is_safe_word, is_trailing_city
+from symbolon.validators import (
     is_valid_french_phone,
     is_valid_iban,
     is_valid_nir,
     is_valid_siren,
     is_valid_siret,
 )
-from pii_vault.vault import AMBIGUOUS_SURNAME, CivilityGender, EntityKind, PiiVault
+from symbolon.vault import AMBIGUOUS_SURNAME, CivilityGender, EntityKind, PiiVault
 
 # Priorité lors de la résolution des chevauchements (plus élevé = prioritaire)
 _KIND_PRIORITY: dict[EntityKind, int] = {

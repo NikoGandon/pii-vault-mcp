@@ -18,8 +18,8 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE))
 
-from pii_vault.scrubber import Scrubber, find_leaks  # noqa: E402
-from pii_vault.vault import PiiVault  # noqa: E402
+from symbolon.scrubber import Scrubber, find_leaks  # noqa: E402
+from symbolon.vault import PiiVault  # noqa: E402
 
 CORPUS_PATH = Path(__file__).parent / "corpus_fr.jsonl"
 STRUCTURED_KINDS = ("EMAIL", "IBAN", "NIR", "SIREN", "SIRET", "TEL")
